@@ -7,23 +7,20 @@ import { db } from "@/config/firebase.config";
 import { User } from "@/types";
 
 const AuthHandler = () => {
-  const { isLoaded, isSignedIn } = useAuth(); // wait for auth to load
-  const { isLoaded: userLoaded, user } = useUser(); // wait for user info
+  const { isLoaded, isSignedIn } = useAuth();
+  const { isLoaded: userLoaded, user } = useUser();
   const pathName = useLocation().pathname;
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storeUserData = async () => {
-      // ✅ Wait until auth and user are fully loaded
       if (!isLoaded || !userLoaded) return;
-
       if (!isSignedIn || !user?.id) return;
 
       setLoading(true);
 
       try {
         const userRef = doc(db, "users", user.id);
-
         const userSnap = await getDoc(userRef);
 
         if (!userSnap.exists()) {
@@ -33,7 +30,7 @@ const AuthHandler = () => {
             email: user.primaryEmailAddress?.emailAddress || "N/A",
             imageUrl: user.imageUrl || "",
             createdAt: serverTimestamp(),
-            updateAt: serverTimestamp(),
+            updatedAt: serverTimestamp(), // ✅ Corrected here
           };
 
           await setDoc(userRef, userData);
