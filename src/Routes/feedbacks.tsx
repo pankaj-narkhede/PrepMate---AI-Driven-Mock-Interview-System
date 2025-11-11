@@ -5,7 +5,7 @@ import { db } from "@/config/firebase.config";
 import { Interview } from "@/types";
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { BreadCrumbs } from "@/components/BreadCrumbs";
-import  Headings from "@/components/Headings";
+import Headings from "@/components/Headings";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
@@ -40,19 +40,29 @@ export const Feedback = () => {
           navigate("/generate", { replace: true });
           return;
         }
-        setInterview({ id: interviewSnap.id, ...(interviewSnap.data() as Interview) });
+
+        // ✅ FIXED HERE
+        setInterview({
+          ...(interviewSnap.data() as Interview),
+          id: interviewSnap.id,
+        });
 
         if (!userId) return;
+
         const feedbackQuery = query(
           collection(db, "userAnswers"),
           where("userId", "==", userId),
           where("mockIdRef", "==", interviewId)
         );
+
         const feedbackSnap = await getDocs(feedbackQuery);
+
+        // ✅ FIXED HERE
         const fetchedFeedbacks: UserAnswer[] = feedbackSnap.docs.map((doc) => ({
-          id: doc.id,
           ...(doc.data() as UserAnswer),
+          id: doc.id,
         }));
+
         setFeedbacks(fetchedFeedbacks);
       } catch (error) {
         console.error(error);
@@ -77,7 +87,6 @@ export const Feedback = () => {
     return "bg-red-500";
   };
 
-  // Pie chart data
   const pieData = useMemo(() => {
     const high = feedbacks.filter(f => f.rating >= 8).length;
     const medium = feedbacks.filter(f => f.rating >= 5 && f.rating < 8).length;
@@ -89,7 +98,7 @@ export const Feedback = () => {
     ];
   }, [feedbacks]);
 
-  const COLORS = ["#34D399", "#FBBF24", "#EF4444"]; // green, yellow, red
+  const COLORS = ["#34D399", "#FBBF24", "#EF4444"];
 
   if (isLoading) {
     return (
@@ -162,20 +171,17 @@ export const Feedback = () => {
                   transition={{ duration: 0.3 }}
                   className="space-y-4"
                 >
-                  {/* Expected Answer */}
-                  <Card className={`p-4 mt-5 bg-green-100 border-green-600 rounded-md shadow-sm border hover:shadow-lg transition`}>
+                  <Card className="p-4 mt-5 bg-green-100 border-green-600 rounded-md shadow-sm border hover:shadow-lg transition">
                     <CardTitle className="text-green-600 font-semibold">Expected Answer</CardTitle>
                     <CardDescription className="text-gray-600 mt-2">{feed.correct_ans}</CardDescription>
                   </Card>
 
-                  {/* User Answer */}
-                  <Card className={`p-4 mt-5 rounded-md shadow-sm border bg-yellow-100 border-yellow-600 hover:shadow-lg transition`}>
+                  <Card className="p-4 mt-5 rounded-md shadow-sm border bg-yellow-100 border-yellow-600 hover:shadow-lg transition">
                     <CardTitle className="text-yellow-500 font-semibold">Your Answer</CardTitle>
                     <CardDescription className="text-gray-600 mt-2">{feed.user_ans}</CardDescription>
                   </Card>
 
-                  {/* AI Feedback */}
-                  <Card className={`p-4 rounded-md mt-5 bg-orange-100 border-orange-600 shadow-sm border hover:shadow-lg transition`}>
+                  <Card className="p-4 rounded-md mt-5 bg-orange-100 border-orange-600 shadow-sm border hover:shadow-lg transition">
                     <CardTitle className="text-orange-600 font-semibold">AI Feedback</CardTitle>
                     <CardDescription className="text-gray-600 mt-2">{feed.feedback}</CardDescription>
                   </Card>

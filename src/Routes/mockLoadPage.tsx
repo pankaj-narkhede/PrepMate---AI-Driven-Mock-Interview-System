@@ -15,17 +15,26 @@ export const MockLoadPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Fetch interview data
   useEffect(() => {
-    if (!interviewId) navigate("/generate", { replace: true });
+    if (!interviewId) {
+      navigate("/generate", { replace: true });
+      return;
+    }
 
     const fetchInterview = async () => {
       try {
         const docRef = doc(db, "interviews", interviewId);
         const docSnap = await getDoc(docRef);
-        if (docSnap.exists())
-          setInterview({ id: docSnap.id, ...docSnap.data() } as Interview);
-        else navigate("/generate", { replace: true });
+
+        if (!docSnap.exists()) {
+          navigate("/generate", { replace: true });
+          return;
+        }
+
+        setInterview({
+          ...(docSnap.data() as Interview),
+          id: docSnap.id,
+        });
       } catch (err) {
         console.error(err);
         navigate("/generate", { replace: true });
@@ -37,12 +46,13 @@ export const MockLoadPage = () => {
     fetchInterview();
   }, [interviewId, navigate]);
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loader className="w-10 h-10 animate-spin text-gray-600" />
       </div>
     );
+  }
 
   if (!interview) return null;
 
@@ -52,16 +62,13 @@ export const MockLoadPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
-      {/* Breadcrumb */}
       <BreadCrumbs
         breadCrumbPage={interview.position}
         breadCrumbItems={[{ label: "Mock Interviews", link: "/generate" }]}
       />
 
-      {/* Interview Card */}
       <InterviewPin interview={interview} onMockPage />
 
-      {/* Start Button */}
       <div className="flex justify-center">
         <Button
           onClick={handleStartMock}
@@ -71,21 +78,18 @@ export const MockLoadPage = () => {
         </Button>
       </div>
 
-      {/* Guidelines / Info */}
       <Alert className="bg-yellow-50 border-yellow-200 mt-4">
         <AlertTitle className="text-yellow-800 flex items-center gap-1">
           <Info className="w-4 h-4" /> Guidelines
         </AlertTitle>
         <AlertDescription className="text-yellow-700 text-sm space-y-1">
-          <p>1. Once you start, enable your microphone.</p>
-          <p>2. Enable your camera for a realistic experience. (Video will not be saved.)</p>
-          <p>3. Answer each question clearly and concisely.</p>
-          <p>4. You will receive a personalized report after the mock interview.</p>
-          <p>5. Stay focused and ensure a quiet environment.</p>
+          <p>1. Enable microphone when prompted.</p>
+          <p>2. Camera is used only to simulate real interviews (no recording).</p>
+          <p>3. Answer each question clearly and confidently.</p>
+          <p>4. You will receive feedback after completion.</p>
         </AlertDescription>
       </Alert>
 
-      {/* Back Button */}
       <div className="flex justify-center mt-4">
         <Button variant="outline" onClick={() => navigate("/generate")}>
           Back to List
@@ -94,3 +98,5 @@ export const MockLoadPage = () => {
     </div>
   );
 };
+
+export default MockLoadPage;
