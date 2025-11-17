@@ -46,25 +46,21 @@
 :root {
   --radius: 0.75rem;
 
-  /* Background & Foreground */
-  --background: #f5f7ff; /* light gradient base */
-  --foreground: #1e1f28; 
+  --background: #f5f7ff;
+  --foreground: #1e1f28;
 
-  /* Cards & Popovers */
   --card: #ffffff;
   --card-foreground: #1e1f28;
   --popover: #f0f2f5;
   --popover-foreground: #1e1f28;
 
-  /* Primary & Accent */
-  --primary: #ff4f23; /* Indigo */
+  --primary: #fe6817;
   --primary-foreground: #ffffff;
-  --secondary: #d7d7d7; /* Cyan */
-  --secondary-foreground: #ff4000;
-  --accent: #ff3400; /* Amber */
+  --secondary:#ffffff ;
+  --secondary-foreground: #fe6817;
+  --accent: #ff3400;
   --accent-foreground: #ffffff;
 
-  /* Muted / Input / Border */
   --muted: #e5e7eb;
   --muted-foreground: #6b7280;
   --destructive: ;
@@ -72,14 +68,12 @@
   --input: #d8dddb;
   --ring: #ff3700;
 
-  /* Charts */
   --chart-1: #4f46e5;
   --chart-2: #22d3ee;
   --chart-3: #fbbf24;
   --chart-4: #10b981;
   --chart-5: #f43f5e;
 
-  /* Sidebar */
   --sidebar: #ffffff;
   --sidebar-foreground: #eaff00;
   --sidebar-primary: #4f46e5;
@@ -90,7 +84,6 @@
   --sidebar-ring: #6366f1;
 }
 
-/* Dark Mode */
 .dark {
   --background: #1e1f28;
   --foreground: #f5f7ff;
@@ -153,6 +146,6 @@
   display: none;
 }
 .scrollbar-hide {
-  -ms-overflow-style: none; /* IE & Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

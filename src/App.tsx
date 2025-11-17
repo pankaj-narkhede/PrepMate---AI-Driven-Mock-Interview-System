@@ -38,7 +38,7 @@ const App = () => {
               </ProtectedRoutes>
             }
           ></Route>
-          {/* add all protected  routes */}
+          {/*  all protected  routes */}
           <Route element={<Generate />} path="/generate">
             <Route index element={<Dashboard />} />
             <Route path=":interviewId" element={<CreateEditPage />} />

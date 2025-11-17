@@ -30,14 +30,14 @@ const AuthHandler = () => {
             email: user.primaryEmailAddress?.emailAddress || "N/A",
             imageUrl: user.imageUrl || "",
             createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(), // ✅ Corrected here
+            updatedAt: serverTimestamp(), 
           };
 
           await setDoc(userRef, userData);
           console.log("✅ User stored in Firestore");
         }
       } catch (error: any) {
-        console.error("❌ Error storing user data:", error.message || error);
+        console.error("Error storing user data:", error.message || error);
       } finally {
         setLoading(false);
       }
@@ -49,7 +49,7 @@ const AuthHandler = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center py-6">
-        <Loader className="w-5 h-5 animate-spin text-orange-500" />
+        <Loader className="w-5 h-5 animate-spin text-primary" />
       </div>
     );
   }

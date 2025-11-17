@@ -15,7 +15,7 @@ const Header = () => {
 
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <img src="/favicon.svg" alt="" className="h-10 object-contain" />
+            <img src="/favicon.svg" alt="logo" className="h-10 object-contain" />
             <span className="text-lg font-semibold">
               <span className="text-primary">Prep</span>Mate
             </span>

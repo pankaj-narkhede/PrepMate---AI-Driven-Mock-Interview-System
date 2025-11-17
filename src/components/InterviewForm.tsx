@@ -33,7 +33,7 @@ import { db } from "@/config/firebase.config";
 interface FormData {
   position: string;
   description: string;
-  experience: number;
+  experience: number | string;
   techStack: string;
 }
 
@@ -51,7 +51,7 @@ export const InterviewForm = ({ initialData }: InterviewFormProps) => {
     defaultValues: initialData || {
       position: "",
       description: "",
-      experience: 0,
+      experience: "",
       techStack: "",
     },
   });
@@ -129,14 +129,10 @@ export const InterviewForm = ({ initialData }: InterviewFormProps) => {
         });
       }
 
-      toast.success("Saved!");
+      toast.success("New mock interview created successfully.");
       navigate("/generate", { replace: true });
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        toast.error("Error", { description: error.message });
-      } else {
-        toast.error("Unexpected error occurred.");
-      }
+    } catch (error) {
+      toast.error("Unexpected error occurred.");
     } finally {
       setLoading(false);
     }
@@ -149,13 +145,19 @@ export const InterviewForm = ({ initialData }: InterviewFormProps) => {
   return (
     <div className="w-full max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-2xl space-y-8">
 
-      <BreadCrumbs breadCrumbPage={initialData ? "Edit" : "Create"} breadCrumbItems={[{ label: "Mock Interviews", link: "/generate" }]} />
+      <BreadCrumbs
+        breadCrumbPage={initialData ? "Edit" : "Create"}
+        breadCrumbItems={[{ label: "Mock Interviews", link: "/generate" }]}
+      />
 
       <div className="flex justify-between items-center">
-        <Headings title={initialData ? "Edit Mock Interview" : "Create a New Mock Interview"} isSubheading />
+        <Headings
+          title={initialData ? "Edit Mock Interview" : "Create a New Mock Interview"}
+          isSubheading
+        />
         {initialData && (
           <Button variant="destructive" size="icon" onClick={handleDelete} disabled={loading}>
-            {loading ? <Loader className="w-4 h-4 animate-spin" /> : <Trash2 className="w-5 h-5" />}
+            {loading ? <Loader className="w-4 h-4 animate-spin text-primary" /> : <Trash2 className="w-5 h-5" />}
           </Button>
         )}
       </div>
@@ -165,52 +167,68 @@ export const InterviewForm = ({ initialData }: InterviewFormProps) => {
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
-          <FormField<FormData, "position">
+          {/* Position */}
+          <FormField
             control={form.control}
             name="position"
+            rules={{ required: "Position is required" }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Position</FormLabel>
                 <FormControl><Input {...field} disabled={loading} /></FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-500" />
               </FormItem>
             )}
           />
 
-          <FormField<FormData, "description">
+          {/* Description */}
+          <FormField
             control={form.control}
             name="description"
+            rules={{ required: "Description is required" }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Description</FormLabel>
-                <FormControl><Textarea {...field} className="h-28" disabled={loading} /></FormControl>
-                <FormMessage />
+                <FormControl>
+                  <Textarea {...field} className="h-28" disabled={loading} />
+                </FormControl>
+                <FormMessage className="text-red-500" />
               </FormItem>
             )}
           />
 
-          <FormField<FormData, "experience">
+          {/* Experience */}
+          <FormField
             control={form.control}
             name="experience"
+            rules={{ required: "Experience is required" }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Experience (years)</FormLabel>
                 <FormControl>
-                  <Input {...field} type="number" min={0} className="appearance-none" disabled={loading} />
+                  <Input
+                    {...field}
+                    type="number"
+                    min={0}
+                    className="appearance-none"
+                    disabled={loading}
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-500" />
               </FormItem>
             )}
           />
 
-          <FormField<FormData, "techStack">
+          {/* Tech Stack */}
+          <FormField
             control={form.control}
             name="techStack"
+            rules={{ required: "Tech stack is required" }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Tech Stack</FormLabel>
                 <FormControl><Input {...field} disabled={loading} /></FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-500" />
               </FormItem>
             )}
           />
@@ -219,7 +237,7 @@ export const InterviewForm = ({ initialData }: InterviewFormProps) => {
             <Button type="button" variant="outline" disabled={loading} onClick={() => form.reset()}>
               Reset
             </Button>
-            <Button type="submit" disabled={loading} className="bg-orange-500 text-white">
+            <Button type="submit" disabled={loading} >
               {loading ? <Loader className="w-4 h-4 animate-spin" /> : (initialData ? "Save Changes" : "Create")}
             </Button>
           </div>

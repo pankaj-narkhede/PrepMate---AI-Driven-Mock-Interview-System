@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useAuth } from "@clerk/clerk-react";
 import {
   CircleStop,
@@ -78,7 +78,7 @@ const RecordAnswer = ({
     setUserAnswer(combined);
   }, [results]);
 
-  // ✅ Start webcam
+  
   const startWebcam = async () => {
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({
@@ -89,7 +89,7 @@ const RecordAnswer = ({
       setStream(mediaStream);
       setIsWebCam(true);
 
-      // ✅ Assign stream to Webcam video element
+      
       if (webcamRef.current?.video) {
         (webcamRef.current.video as HTMLVideoElement).srcObject = mediaStream;
       }
@@ -101,7 +101,7 @@ const RecordAnswer = ({
     }
   };
 
-  // ✅ Stop webcam
+  
   const stopWebcam = () => {
     if (stream) stream.getTracks().forEach((track) => track.stop());
     setStream(null);
@@ -109,14 +109,14 @@ const RecordAnswer = ({
     toast.info("Webcam stopped");
   };
 
-  // Cleanup on unmount
+
   useEffect(() => {
     return () => {
       if (stream) stream.getTracks().forEach((track) => track.stop());
     };
   }, [stream]);
 
-  // ✅ Record answer
+  
   const recordUserAnswer = async () => {
     if (isRecording) {
       stopSpeechToText();
@@ -143,7 +143,7 @@ const RecordAnswer = ({
     }
   };
 
-  // ✅ Generate AI feedback
+  
   const generateResult = async (q: string, correct: string, userAns: string) => {
     setIsAiGenerating(true);
     const prompt = `
@@ -165,7 +165,7 @@ const RecordAnswer = ({
     }
   };
 
-  // ✅ Record again
+
   const recordNewAnswer = () => {
     stopSpeechToText();
     setUserAnswer("");
@@ -173,7 +173,7 @@ const RecordAnswer = ({
     startSpeechToText();
   };
 
-  // ✅ Save answer
+  
   const saveUserAnswer = async () => {
     if (!aiResult) return;
 

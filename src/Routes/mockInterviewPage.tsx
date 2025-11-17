@@ -6,8 +6,7 @@ import { Interview } from "@/types";
 import { Loader } from "lucide-react";
 import { BreadCrumbs } from "@/components/BreadCrumbs";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import  QuestionSection  from "@/components/QuestionSection"; // ✅ Make sure you export this properly
-// import { InterviewPin } from "@/components/pin"; // optional if you use it below
+import  QuestionSection  from "@/components/QuestionSection"; 
 
 export const MockInterviewPage = () => {
   const { interviewId } = useParams<{ interviewId: string }>();
@@ -15,7 +14,7 @@ export const MockInterviewPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // ✅ Fetch interview details
+ 
   useEffect(() => {
     if (!interviewId) {
       navigate("/generate", { replace: true });
@@ -47,16 +46,16 @@ export const MockInterviewPage = () => {
     fetchInterview();
   }, [interviewId, navigate]);
 
-  // ✅ Loading spinner
+ 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Loader className="w-6 h-6 animate-spin text-gray-600" />
+        <Loader className="w-6 h-6 animate-spin text-primary" />
       </div>
     );
   }
 
-  // ✅ No interview found
+  
   if (!interview) {
     return <div className="text-center text-gray-600 mt-10">Interview not found</div>;
   }
@@ -83,7 +82,7 @@ export const MockInterviewPage = () => {
         </AlertDescription>
       </Alert>
 
-      {/* ✅ Questions section */}
+  
       {interview.questions && interview.questions.length > 0 ? (
         <QuestionSection questions={interview.questions} />
       ) : (

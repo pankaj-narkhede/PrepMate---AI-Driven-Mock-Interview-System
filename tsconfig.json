@@ -3,9 +3,9 @@
     "module": "ESNext",
     "types": ["node"],
 
-    "baseUrl": ".",                       // ✅ ADD THIS
+    "baseUrl": ".",                       
     "paths": {
-      "@/*": ["src/*"]                    // ✅ FIX THIS
+      "@/*": ["src/*"]                    
     },
 
     "moduleResolution": "bundler",

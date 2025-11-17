@@ -12,7 +12,7 @@ export const CreateEditPage = () => {
 
   useEffect(() => {
     const fetchInterview = async () => {
-      // If editing
+
       if (interviewId) {
         try {
           const interviewRef = doc(db, "interviews", interviewId);
@@ -21,7 +21,6 @@ export const CreateEditPage = () => {
           if (interviewDoc.exists()) {
             const data = interviewDoc.data() as Interview;
 
-            // ✅ Spread data first, then override `id`
             setInterview({
               ...data,
               id: interviewDoc.id,
@@ -32,7 +31,7 @@ export const CreateEditPage = () => {
         }
       }
 
-      setIsLoading(false); // Stop loading after fetch attempt
+      setIsLoading(false); 
     };
 
     fetchInterview();
@@ -43,7 +42,6 @@ export const CreateEditPage = () => {
       {isLoading ? (
         <p>Loading interview...</p>
       ) : (
-        // ✅ If no interview, form acts in create mode
         <InterviewForm initialData={interview ?? undefined} />
       )}
     </div>

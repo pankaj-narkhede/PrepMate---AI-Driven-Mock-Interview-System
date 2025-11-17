@@ -19,7 +19,7 @@ export const Dashboard = () => {
   const { userId } = useAuth();
 
   useEffect(() => {
-    if (!userId) return; // Guard against undefined
+    if (!userId) return;
 
     setLoading(true);
     const interviewQuery = query(
@@ -49,7 +49,7 @@ export const Dashboard = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6">
-      {/* Header */}
+      
       <div className="flex w-full items-center justify-between">
         <Headings
           title="Dashboard"
@@ -64,7 +64,7 @@ export const Dashboard = () => {
 
       <Separator className="my-6" />
 
-      {/* Content Grid */}
+      
       <div className="grid md:grid-cols-3 gap-6">
         {loading
           ? Array.from({ length: 6 }).map((_, index) => (
@@ -75,15 +75,11 @@ export const Dashboard = () => {
               <InterviewPin key={interview.id} interview={interview} />
             ))
           : (
-           // Empty State - Modernized with a more prominent container and softer text
+           
             <div className="col-span-full flex flex-col items-center justify-center py-20 bg-card border-2 border-dashed border-border/50 rounded-2xl shadow-inner space-y-6 text-center transition-all duration-300 hover:border-primary/50">
-              <img
-                src="/assets/svg/not-found.svg"
-                className="w-48 h-48 object-contain opacity-70" // Slightly larger and softer opacity
-                alt="No Data"
-              />
+              
               <h2 className="text-xl font-bold text-foreground">
-                No Mock Interviews Found Yet 😔
+                No Mock Interviews Found Yet !!!
               </h2>
               <p className="text-sm text-muted-foreground max-w-lg leading-relaxed">
                 You haven't created any mock interviews yet. Start your journey to interview success by generating your first personalized AI practice session.

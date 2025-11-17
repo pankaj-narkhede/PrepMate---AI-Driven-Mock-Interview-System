@@ -16,8 +16,8 @@ export const Headings = ({title,description,isSubheading=false, className} : Hea
         className={cn(
           "font-extrabold tracking-tight", 
           isSubheading 
-            ? "text-xl md:text-2xl text-orange-400" 
-            : "text-2xl md:text-4xl text-orange-500"  
+            ? "text-xl md:text-2xl bg-gradient-to-r from-orange-600  to-orange-400 bg-clip-text text-transparent" 
+            : "text-2xl md:text-4xl bg-gradient-to-r from-orange-600  to-orange-400 bg-clip-text text-transparent "  
         )}
       >
         {title}

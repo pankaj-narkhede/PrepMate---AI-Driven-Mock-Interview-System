@@ -22,7 +22,7 @@ const HomePage = () => {
       <div className="mx-auto">
         <section
           className="min-h-screen flex flex-col justify-center bg-cover bg-center bg-no-repeat relative mb-2"
-          style={{ backgroundImage: "url('/src/assets/bg.jpeg')" }}
+          style={{ backgroundImage: "url('/bg.png')" }}
         >
           <div className="absolute inset-0 bg-black/50"></div>
 
@@ -31,7 +31,7 @@ const HomePage = () => {
               <div className="flex-1 space-y-6 text-white">
                 <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
                   Ace Your Next Interview with{" "}
-                  <span className="text-primary">AI-Powered Practice</span>
+                  <span className="text-5xl bg-gradient-to-r from-red-500  to-orange-400 bg-clip-text text-transparent">AI-Powered Practice</span>
                 </h1>
                 <p className="text-lg max-w-md text-gray-200">
                   Get personalized mock interviews, real-time feedback, and performance analytics tailored to your skills and experience.
@@ -39,7 +39,7 @@ const HomePage = () => {
 
                 <Button
                   size="lg"
-                  className="shadow-lg transition-all px-6 py-3 rounded-lg font-semibold"
+                  className="shadow-lg transition-all px-6 py-3 rounded-lg font-semibold "
                   onClick={startInterview}
                 >
                   Start An Interview

@@ -41,7 +41,7 @@ export const Feedback = () => {
           return;
         }
 
-        // ✅ FIXED HERE
+        
         setInterview({
           ...(interviewSnap.data() as Interview),
           id: interviewSnap.id,
@@ -57,7 +57,7 @@ export const Feedback = () => {
 
         const feedbackSnap = await getDocs(feedbackQuery);
 
-        // ✅ FIXED HERE
+        
         const fetchedFeedbacks: UserAnswer[] = feedbackSnap.docs.map((doc) => ({
           ...(doc.data() as UserAnswer),
           id: doc.id,
@@ -103,7 +103,7 @@ export const Feedback = () => {
   if (isLoading) {
     return (
       <div className="w-full flex justify-center items-center h-screen">
-        <Loader className="w-12 h-12 animate-spin text-blue-500" />
+        <Loader className="w-12 h-12 animate-spin text-primary" />
       </div>
     );
   }
@@ -120,9 +120,9 @@ export const Feedback = () => {
 
       <Headings title="Congratulations!" description="Your personalized feedback is ready. Review it below." />
 
-      <div className="bg-white shadow-md rounded-lg p-4 flex items-center justify-between border-l-4 border-blue-500 transition-all">
+      <div className="bg-white shadow-md rounded-lg p-4 flex items-center justify-between border-l-4 border-primary transition-all">
         <h3 className="text-lg font-semibold text-gray-800">Overall Rating</h3>
-        <span className="text-2xl font-bold text-blue-600">{overallRating}/10</span>
+        <span className="text-2xl font-bold text-primary">{overallRating}/10</span>
       </div>
 
       {/* Pie Chart */}
