@@ -13,7 +13,7 @@ import { toast } from "sonner";
 interface InterviewProps {
   interview: Interview;
   onMockPage?: boolean;
-  onRefresh?: () => void; 
+  onRefresh?: () => void;
 }
 
 export const InterviewPin = ({ interview, onMockPage = false, onRefresh }: InterviewProps) => {
@@ -21,21 +21,17 @@ export const InterviewPin = ({ interview, onMockPage = false, onRefresh }: Inter
   const { userId } = useAuth();
   const navigate = useNavigate();
 
-  
   const createdAt = interview.createdAt
     ? new Date(interview.createdAt.seconds * 1000).toLocaleDateString()
     : "N/A";
 
-  
   const techStackArray = Array.isArray(interview.techStack)
     ? interview.techStack
     : typeof interview.techStack === "string"
     ? interview.techStack.split(",").map((t) => t.trim())
     : [];
 
-
   const handleDelete = async () => {
-   
     const confirmDelete = window.confirm("Are you sure you want to delete this interview?");
     if (!confirmDelete) return;
 
@@ -52,47 +48,38 @@ export const InterviewPin = ({ interview, onMockPage = false, onRefresh }: Inter
     }
   };
 
-  // Navigation handlers
   const handleUpdate = () => navigate(`/generate/${interview.id}`, { replace: true });
   const handleFeedback = () => navigate(`/generate/feedback/${interview.id}`, { replace: true });
   const handleStart = () => navigate(`/generate/interview/${interview.id}`, { replace: true });
 
   return (
-  
     <Card className="bg-white border border-gray-200 shadow-lg hover:shadow-xl hover:border-border transition-all duration-300 cursor-pointer">
-      
       <CardHeader className="pb-3 border-b border-gray-100">
-        
         <CardTitle className="text-xl font-bold text-primary line-clamp-1">
           {interview.position}
         </CardTitle>
-       
         <CardDescription className="text-sm text-gray-500 line-clamp-2">
           {interview.description || "No description available"}
         </CardDescription>
       </CardHeader>
 
       <CardContent className="flex flex-col gap-3 pt-4">
-        
-       
         <div className="flex flex-wrap justify-between text-sm text-gray-600 gap-2">
           <span className="flex items-center gap-1 text-gray-700 font-medium">
             <Users className="w-4 h-4 text-primary" />
-            <span className="text-gray-600">Exp: {interview.experience} yrs</span>
+            Exp: {interview.experience} yrs
           </span>
           <span className="flex items-center gap-1 text-gray-500">
             <Clock className="w-4 h-4 text-gray-400" />
-            <span className="text-gray-500">Created: {createdAt}</span>
+            Created: {createdAt}
           </span>
         </div>
 
-        
         {techStackArray.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-1 border-t pt-3 border-gray-100">
             {techStackArray.map((tech) => (
-             
-              <Badge 
-                key={tech} 
+              <Badge
+                key={tech}
                 className="text-xs font-semibold bg-gray-100 text-gray-600 border border-gray-300 hover:bg-gray-200"
               >
                 {tech}
@@ -101,48 +88,51 @@ export const InterviewPin = ({ interview, onMockPage = false, onRefresh }: Inter
           </div>
         )}
 
-        {/* Action buttons */}
         {!onMockPage && (
           <div className="flex flex-wrap gap-2 mt-4">
-           
             <Button
               onClick={handleStart}
               size="sm"
-              className="flex items-center gap-1 text-white font-semibold "
+              className="flex items-center gap-1 text-white font-semibold"
               disabled={loading}
             >
               {loading ? <Loader className="w-4 h-4 animate-spin" /> : "Start Mock"}
               {!loading && <Sparkles className="w-4 h-4" />}
             </Button>
 
-            
-            <Button size="sm" variant="destructive" 
-              className="flex items-center gap-1 text-gray-700  hover:bg-gray-100 hover:border-border" 
+            <Button
+              size="sm"
+              variant="destructive"
+              className="flex items-center gap-1 text-gray-700 hover:bg-gray-100 hover:border-border"
               onClick={handleFeedback}
             >
               <MessageSquare className="w-4 h-4" /> Feedback
             </Button>
 
-           
-            <Button size="sm" variant="ghost" 
-              className="text-gray-500 hover:bg-gray-100 hover:text-orange-600" 
+            <Button
+              size="sm"
+              variant="ghost"
+              className="text-gray-500 hover:bg-gray-100 hover:text-orange-600"
               onClick={handleUpdate}
             >
-              <Edit className="w-4 h-4" /> 
+              <Edit className="w-4 h-4" />
             </Button>
 
-            <Button size="sm" variant="ghost" 
-              className="text-red-500 hover:bg-red-50 hover:text-red-700" 
-              onClick={handleDelete} 
+            <Button
+              size="sm"
+              variant="ghost"
+              className="text-red-500 hover:bg-red-50 hover:text-red-700"
+              onClick={handleDelete}
               disabled={loading}
             >
-              <Trash className="w-4 h-4" /> 
+              <Trash className="w-4 h-4" />
             </Button>
           </div>
         )}
 
-       
-        {onMockPage && <span className="mt-3 text-sm font-medium text-primary">Mock in progress...</span>}
+        {onMockPage && (
+          <span className="mt-3 text-sm font-medium text-primary">Mock in progress...</span>
+        )}
       </CardContent>
     </Card>
   );
